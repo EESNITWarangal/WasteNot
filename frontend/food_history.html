@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food History - WasteNot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navbar.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <img src="ChatGPT Image Jun 26, 2025, 03_36_10 AM.png" alt="WasteNot Logo" class="logo-image">
+      <span class="logo-text">WASTENOT</span>
+    </div>
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="mobileNav" class="mobile-nav" hidden>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>Your History</h2>
+    <button id="refreshHistoryBtn" class="btn">Refresh</button>
+    <div class="history-section">
+      <h3>Claimed Food</h3>
+      <div class="table-responsive"><table id="claimedTable" class="food-table"><thead><tr><th>Quantity</th><th>Venue</th><th>Donor Phone</th><th>Donated By</th><th>Claimed Date</th></tr></thead><tbody id="claimedTableBody"></tbody></table></div>
+    </div>
+    <div class="history-section">
+      <h3>Donated Food</h3>
+      <div class="table-responsive"><table id="donatedTable" class="food-table"><thead><tr><th>Quantity</th><th>Venue</th><th>Claimer Phone</th><th>Claimed By</th><th>Donated Date</th></tr></thead><tbody id="donatedTableBody"></tbody></table></div>
+    </div>
+    <div id="historyMessage"></div>
+  </div>
+  <script src="script.js"></script>
+  <script src="navbar.js"></script>
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html> 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register - WasteNot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navbar.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <img src="ChatGPT Image Jun 26, 2025, 03_36_10 AM.png" alt="WasteNot Logo" class="logo-image">
+      <span class="logo-text">WASTENOT</span>
+    </div>
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="mobileNav" class="mobile-nav" hidden>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <div class="login-register-container">
+    <div class="toggle-buttons">
+      <button id="showLoginBtn" class="toggle-btn active">Login</button>
+      <button id="showRegisterBtn" class="toggle-btn">Register</button>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="loginContainer">
+      <form id="loginForm" class="login-register-form">
+        <label for="loginPhone">Phone Number</label>
+        <input type="text" id="loginPhone" name="phone" required autocomplete="username">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
+        <button type="submit" class="login-register-btn">Login</button>
+      </form>
+      <div id="loginMessage"></div>
+    </div>
+    <div id="registerContainer" style="display:none;">
+      <form id="registerForm" class="login-register-form">
+        <label for="registerName">Name</label>
+        <input type="text" id="registerName" name="name" required autocomplete="name">
+        <label for="registerPhone">Phone Number</label>
+        <input type="text" id="registerPhone" name="phone" required autocomplete="tel">
+        <label for="registerAddress">Address</label>
+        <input type="text" id="registerAddress" name="address" required autocomplete="street-address">
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" name="password" required autocomplete="new-password">
+        <button type="submit" class="login-register-btn">Register</button>
+      </form>
+      <div id="registerMessage"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script src="navbar.js"></script>
+</body>
+</html> 
