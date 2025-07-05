@@ -1,8 +1,8 @@
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
-  background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
-  color: #1e293b;
+  background: #F6E7CB;
+  color: #7C5E3C;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -22,14 +22,10 @@ body {
 }
 
 .container h2 {
-  color: #2563eb;
+  color: #3A4D39;
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 form {
@@ -40,7 +36,7 @@ form {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #374151;
+  color: #7C5E3C;
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -48,24 +44,24 @@ label {
 input {
   width: 100%;
   padding: 1rem 1.2rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #E1C78F;
   border-radius: 0.8rem;
   font-size: 1rem;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
   box-sizing: border-box;
-  background: #f9fafb;
+  background: #fffbe9;
 }
 
 input:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: #A98467;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  box-shadow: 0 0 0 3px rgba(169,132,103,0.10);
 }
 
-.btn {
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+.btn, .login-register-btn {
+  background: #3A4D39;
   color: #fff;
   padding: 1rem 2.5rem;
   border: none;
@@ -74,14 +70,15 @@ input:focus {
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
+  box-shadow: 0 4px 12px rgba(169,132,103,0.10);
   width: 100%;
   margin-top: 1rem;
 }
 
-.btn:hover {
-  background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
-  box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+.btn:hover, .login-register-btn:hover {
+  background: #F9D783;
+  color: #3A4D39;
+  box-shadow: 0 6px 20px rgba(169,132,103,0.18);
   transform: translateY(-2px);
 }
 
@@ -100,17 +97,19 @@ hr {
   display: none;
 }
 
+/* Success message in wheat/olive */
 #loginMessage.success {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: #F9D783;
+  color: #3A4D39;
+  border: 1px solid #E1C78F;
   display: block;
 }
 
+/* Error message in wheat/brick */
 #loginMessage.error {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fecaca;
+  background: #fff3e0;
+  color: #B2533E;
+  border: 1px solid #E1C78F;
   display: block;
 }
 
@@ -134,14 +133,14 @@ hr {
   }
 }
 
-/* Toast Notification */
+/* Toast Notification - olive/wheat palette */
 .toast {
   visibility: hidden;
   min-width: 200px;
-  background-color: #2196F3;
-  color: #fff;
+  background: #F9D783;
+  color: #3A4D39;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 1rem;
   padding: 16px;
   position: fixed;
   z-index: 9999;
@@ -150,6 +149,8 @@ hr {
   font-size: 17px;
   transform: translateX(-50%);
   opacity: 0;
+  border: 1px solid #E1C78F;
+  box-shadow: 0 2px 8px rgba(169,132,103,0.10);
   transition: opacity 0.5s, visibility 0.5s;
 }
 .toast.show {
@@ -157,7 +158,9 @@ hr {
   opacity: 1;
 }
 .toast.error {
-  background-color: #dc2626;
+  background: #fff3e0;
+  color: #B2533E;
+  border: 1px solid #E1C78F;
 }
 
 /* Toggle Buttons */
@@ -168,9 +171,9 @@ hr {
   gap: 1rem;
 }
 .toggle-btn {
-  background: #e0eaff;
-  color: #2563eb;
-  border: none;
+  background: #fffbe9;
+  color: #3A4D39;
+  border: 1px solid #E1C78F;
   padding: 0.8rem 2.2rem;
   border-radius: 2rem 2rem 0 0;
   font-weight: 700;
@@ -180,10 +183,63 @@ hr {
   outline: none;
 }
 .toggle-btn.active {
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  background: #F9D783;
+  color: #3A4D39;
+  box-shadow: 0 2px 8px rgba(169,132,103,0.08);
 }
 #loginContainer, #registerContainer {
   margin-top: 0;
+}
+
+/* Push login/register below navbar */
+.below-navbar {
+  margin-top: 110px;
+}
+
+/* Card style for login/register forms */
+.login-card {
+  background: #fffbe9;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(169,132,103,0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 0 auto 2rem auto;
+  max-width: 420px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #E1C78F;
+}
+
+@media (max-width: 700px) {
+  .below-navbar {
+    margin-top: 80px;
+  }
+  .login-card {
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+    max-width: calc(100% - 4rem);
+    width: calc(100% - 4rem);
+    margin: 1.5rem auto 0 auto;
+  }
+  .login-register-container, .login-card {
+    margin: 1.5rem auto 0 auto;
+    max-width: calc(100% - 4rem);
+    width: calc(100% - 4rem);
+    text-align: center;
+    padding: 1.2rem 1rem;
+  }
+  .login-register-form {
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 1.2rem 0.5rem;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .login-register-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    text-align: left;
+  }
+  .login-register-form input {
+    width: 100%;
+    box-sizing: border-box;
+  }
 } 

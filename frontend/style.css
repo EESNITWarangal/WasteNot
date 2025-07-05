@@ -1040,3 +1040,28 @@ body {
   }
   /* --- END: Food Table Styles --- */
   
+  @media (max-width: 600px) {
+    .login-register-container, .list-food-container {
+      margin: 1.5rem auto 0 auto;
+      max-width: 98vw;
+      text-align: center;
+      padding: 1.2rem 0.5rem;
+    }
+    .login-register-form, .list-food-form {
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 1.2rem 0.5rem;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    .login-register-form label, .list-food-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      text-align: left;
+    }
+    .login-register-form input, .list-food-form input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+  

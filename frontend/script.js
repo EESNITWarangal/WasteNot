@@ -201,6 +201,65 @@ if (foodTableBody) {
     });
 
   function renderFoodTable(foods) {
+    const isMobile = window.innerWidth <= 700;
+    const mobileList = document.getElementById('mobileFoodList');
+    if (isMobile && mobileList) {
+      document.querySelector('.table-responsive').style.display = 'none';
+      mobileList.style.display = 'block';
+      mobileList.innerHTML = '';
+      if (!foods.length) {
+        mobileList.innerHTML = '<div class="mobile-card" style="text-align:center;">No food available right now.</div>';
+        return;
+      }
+      foods.forEach(food => {
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div><b>Donor Name:</b> ${food.donor_name || 'Unknown'}</div>
+          <div><b>State:</b> ${food.state || ''}</div>
+          <div><b>City:</b> ${food.city || food.custom_city || ''}</div>
+          <div><b>Venue:</b> ${food.venue}</div>
+          <div><b>Amount:</b> ${food.amount}</div>
+          <div><b>Dishes:</b> ${food.dishes}</div>
+          <div><b>Expiry:</b> ${food.expiry ? new Date(food.expiry).toLocaleString() : ''}</div>
+          <div><b>Food Code:</b> ${food.food_code || ''}</div>
+          <button class="btn claim-btn" data-id="${food.id}">Claim</button>
+        `;
+        mobileList.appendChild(card);
+      });
+      // Add claim handlers
+      mobileList.querySelectorAll('.claim-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const id = btn.getAttribute('data-id');
+          const token = localStorage.getItem('token');
+          if (!token) {
+            showToast('You must be logged in to claim food. Redirecting to login...', 'error');
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 1500);
+            return;
+          }
+          const res = await fetch(`${API_BASE}/food/claim/${id}`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const data = await res.json();
+          if (res.ok) {
+            showToast('Food claimed successfully!');
+            setTimeout(() => window.location.reload(), 1000);
+          } else {
+            showToast(data.message || 'Failed to claim food', 'error');
+          }
+        });
+      });
+      return;
+    } else if (mobileList) {
+      mobileList.style.display = 'none';
+      document.querySelector('.table-responsive').style.display = 'block';
+    }
+    // Desktop table rendering (unchanged)
     foodTableBody.innerHTML = '';
     if (!foods.length) {
       foodTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#64748b;">No food available right now.</td></tr>';
@@ -272,60 +331,129 @@ async function fetchFoodHistory() {
   const token = localStorage.getItem('token');
   const claimedTableBody = document.getElementById('claimedTableBody');
   const donatedTableBody = document.getElementById('donatedTableBody');
+  const mobileClaimedList = document.getElementById('mobileClaimedList');
+  const mobileDonatedList = document.getElementById('mobileDonatedList');
+  const isMobile = window.innerWidth <= 700;
   const msgDiv = document.getElementById('historyMessage');
   if (!token) {
     if (claimedTableBody) claimedTableBody.innerHTML = '<tr><td colspan="5">Please login to view your history.</td></tr>';
     if (donatedTableBody) donatedTableBody.innerHTML = '<tr><td colspan="5">Please login to view your history.</td></tr>';
+    if (mobileClaimedList) mobileClaimedList.innerHTML = '<div class="mobile-card">Please login to view your history.</div>';
+    if (mobileDonatedList) mobileDonatedList.innerHTML = '<div class="mobile-card">Please login to view your history.</div>';
     return;
   }
   // Fetch claimed food
-  if (claimedTableBody) {
-    claimedTableBody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+  if (claimedTableBody && mobileClaimedList) {
+    if (isMobile) {
+      claimedTableBody.parentElement.style.display = 'none';
+      mobileClaimedList.style.display = 'block';
+      mobileClaimedList.innerHTML = '<div class="mobile-card">Loading...</div>';
+    } else {
+      claimedTableBody.parentElement.style.display = 'block';
+      mobileClaimedList.style.display = 'none';
+      claimedTableBody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+    }
     try {
       const res = await fetch(`${API_BASE}/food/claimed`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
-      if (res.ok && data.length > 0) {
-        claimedTableBody.innerHTML = data.map(item => `
-          <tr>
-            <td data-label="Quantity">${item.amount}</td>
-            <td data-label="Venue">${item.venue}</td>
-            <td data-label="Donor Phone">${item.donor_phone || ''}</td>
-            <td data-label="Donated By">${item.donor_name}</td>
-            <td data-label="Claimed Date">${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : ''}</td>
-          </tr>
-        `).join('');
+      if (isMobile) {
+        if (res.ok && data.length > 0) {
+          mobileClaimedList.innerHTML = '';
+          data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'mobile-card';
+            card.innerHTML = `
+              <div><b>Quantity:</b> ${item.amount}</div>
+              <div><b>Venue:</b> ${item.venue}</div>
+              <div><b>Donor Phone:</b> ${item.donor_phone || ''}</div>
+              <div><b>Donated By:</b> ${item.donor_name}</div>
+              <div><b>Claimed Date:</b> ${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : ''}</div>
+            `;
+            mobileClaimedList.appendChild(card);
+          });
+        } else {
+          mobileClaimedList.innerHTML = '<div class="mobile-card">No claimed food history.</div>';
+        }
       } else {
-        claimedTableBody.innerHTML = '<tr><td colspan="5">No claimed food history.</td></tr>';
+        if (res.ok && data.length > 0) {
+          claimedTableBody.innerHTML = data.map(item => `
+            <tr>
+              <td data-label="Quantity">${item.amount}</td>
+              <td data-label="Venue">${item.venue}</td>
+              <td data-label="Donor Phone">${item.donor_phone || ''}</td>
+              <td data-label="Donated By">${item.donor_name}</td>
+              <td data-label="Claimed Date">${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : ''}</td>
+            </tr>
+          `).join('');
+        } else {
+          claimedTableBody.innerHTML = '<tr><td colspan="5">No claimed food history.</td></tr>';
+        }
       }
     } catch (err) {
-      claimedTableBody.innerHTML = '<tr><td colspan="5">Error loading claimed food history.</td></tr>';
+      if (isMobile) {
+        mobileClaimedList.innerHTML = '<div class="mobile-card">Error loading claimed food history.</div>';
+      } else {
+        claimedTableBody.innerHTML = '<tr><td colspan="5">Error loading claimed food history.</td></tr>';
+      }
     }
   }
   // Fetch donated food
-  if (donatedTableBody) {
-    donatedTableBody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+  if (donatedTableBody && mobileDonatedList) {
+    if (isMobile) {
+      donatedTableBody.parentElement.style.display = 'none';
+      mobileDonatedList.style.display = 'block';
+      mobileDonatedList.innerHTML = '<div class="mobile-card">Loading...</div>';
+    } else {
+      donatedTableBody.parentElement.style.display = 'block';
+      mobileDonatedList.style.display = 'none';
+      donatedTableBody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+    }
     try {
       const res = await fetch(`${API_BASE}/food/donated`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
-      if (res.ok && data.length > 0) {
-        donatedTableBody.innerHTML = data.map(item => `
-          <tr>
-            <td data-label="Quantity">${item.amount}</td>
-            <td data-label="Venue">${item.venue}</td>
-            <td data-label="Claimer Phone">${item.claimer_phone || ''}</td>
-            <td data-label="Claimed By">${item.claimer_name || 'Not yet claimed'}</td>
-            <td data-label="Donated Date">${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : 'N/A'}</td>
-          </tr>
-        `).join('');
+      if (isMobile) {
+        if (res.ok && data.length > 0) {
+          mobileDonatedList.innerHTML = '';
+          data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'mobile-card';
+            card.innerHTML = `
+              <div><b>Quantity:</b> ${item.amount}</div>
+              <div><b>Venue:</b> ${item.venue}</div>
+              <div><b>Claimer Phone:</b> ${item.claimer_phone || ''}</div>
+              <div><b>Claimed By:</b> ${item.claimer_name || 'Not yet claimed'}</div>
+              <div><b>Donated Date:</b> ${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : 'N/A'}</div>
+            `;
+            mobileDonatedList.appendChild(card);
+          });
+        } else {
+          mobileDonatedList.innerHTML = '<div class="mobile-card">No donated food history.</div>';
+        }
       } else {
-        donatedTableBody.innerHTML = '<tr><td colspan="5">No donated food history.</td></tr>';
+        if (res.ok && data.length > 0) {
+          donatedTableBody.innerHTML = data.map(item => `
+            <tr>
+              <td data-label="Quantity">${item.amount}</td>
+              <td data-label="Venue">${item.venue}</td>
+              <td data-label="Claimer Phone">${item.claimer_phone || ''}</td>
+              <td data-label="Claimed By">${item.claimer_name || 'Not yet claimed'}</td>
+              <td data-label="Donated Date">${item.claimed_at ? new Date(item.claimed_at).toLocaleString() : 'N/A'}</td>
+            </tr>
+          `).join('');
+        } else {
+          donatedTableBody.innerHTML = '<tr><td colspan="5">No donated food history.</td></tr>';
+        }
       }
     } catch (err) {
-      donatedTableBody.innerHTML = '<tr><td colspan="5">Error loading donated food history.</td></tr>';
+      if (isMobile) {
+        mobileDonatedList.innerHTML = '<div class="mobile-card">Error loading donated food history.</div>';
+      } else {
+        donatedTableBody.innerHTML = '<tr><td colspan="5">Error loading donated food history.</td></tr>';
+      }
     }
   }
 }

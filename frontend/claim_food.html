@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Claim Food - WasteNot</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style_claim_food.html.css">
   <link rel="stylesheet" href="navbar.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header class="main-header">
+  <header class="main-header login-solid">
     <div class="logo">
-      <img src="ChatGPT Image Jun 26, 2025, 03_36_10 AM.png" alt="WasteNot Logo" class="logo-image">
-      <span class="logo-text">WASTENOT</span>
+      <img src="blankBG logo.png" alt="WasteNot Logo" class="logo-image">
     </div>
     <nav class="desktop-nav">
       <a href="index.html">Home</a>
@@ -28,12 +28,13 @@
       <a href="contact.html">Contact</a>
     </nav>
   </header>
-  <div class="claim-food-container" style="min-height: 80vh;">
+  <div class="claim-food-container below-navbar">
     <h2>Available Food Listings</h2>
-    <div class="food-filter-bar">
+    <div class="food-filter-bar card">
       <label for="filterCity">Filter by City:</label>
       <input type="text" id="filterCity" name="filterCity" placeholder="Enter city name..." autocomplete="off">
     </div>
+    <div id="mobileFoodList" style="display:none;"></div>
     <div class="table-responsive">
       <table id="foodTable" class="food-table">
         <thead>
@@ -58,6 +59,7 @@
     </div>
     <div class="loading" id="loadingFood" style="display:none;">Loading food listings...</div>
   </div>
+  <div id="toast" class="toast"></div>
   <script src="script.js"></script>
   <script src="navbar.js"></script>
 </body>

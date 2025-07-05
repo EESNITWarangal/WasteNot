@@ -1,8 +1,8 @@
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
-  background: linear-gradient(135deg, #e3f0ff 0%, #b3d8ff 100%);
-  color: #1e293b;
+  background: #F6E7CB;
+  color: #7C5E3C;
   min-height: 100vh;
   padding: 2rem 1rem;
   padding-top: 8rem; /* Account for fixed navbar */
@@ -210,72 +210,79 @@ select:focus {
 
 /* --- BEGIN: List Food Form Modern Styling --- */
 .list-food-container {
-  background: #fff;
+  background: #fffbe9;
   border-radius: 1.5rem;
-  box-shadow: 0 8px 32px rgba(37,99,235,0.1);
-  padding: 3rem 2.5rem;
-  max-width: 600px;
-  margin: 2rem auto;
-  text-align: center;
+  box-shadow: 0 4px 24px rgba(169,132,103,0.10);
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  margin: 0 auto 2rem auto;
+  max-width: 380px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #E1C78F;
 }
 .list-food-container h2 {
-  color: #2563eb;
-  font-size: 2.2rem;
+  color: #3A4D39;
+  font-size: 2rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  text-align: center;
 }
 .list-food-form {
-  text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
+}
+.form-section {
+  margin-bottom: 1rem;
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  background: #fff;
+  border-radius: 0.8rem;
+  border: 1px solid #E1C78F;
+  box-shadow: 0 1px 4px rgba(169,132,103,0.04);
+}
+.form-section:last-child {
+  margin-bottom: 0;
 }
 .list-food-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #374151;
+  color: #7C5E3C;
   font-weight: 600;
   font-size: 0.95rem;
 }
 .list-food-form input,
 .list-food-form select {
-  display: block;
   width: 100%;
-  padding: 1rem 1.2rem;
-  border: 2px solid #e5e7eb;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid #E1C78F;
   border-radius: 0.8rem;
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   transition: all 0.3s ease;
   box-sizing: border-box;
-  background: #f9fafb;
+  background: #fffbe9;
 }
 .list-food-form input:focus,
 .list-food-form select:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: #A98467;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  box-shadow: 0 0 0 3px rgba(169,132,103,0.10);
 }
 .list-food-form .btn {
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  background: #3A4D39;
   color: #fff;
-  padding: 1rem 2.5rem;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 2rem;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
+  box-shadow: 0 4px 12px rgba(169,132,103,0.10);
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
 }
 .list-food-form .btn:hover {
-  background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
-  box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+  background: #F9D783;
+  color: #3A4D39;
+  box-shadow: 0 6px 20px rgba(169,132,103,0.18);
   transform: translateY(-2px);
 }
 .list-food-form .declaration-container {
@@ -301,7 +308,9 @@ select:focus {
 @media (max-width: 600px) {
   .list-food-container {
     padding: 2rem 1.5rem;
-    margin: 1rem;
+    margin: 1rem auto;
+    max-width: calc(100% - 4rem);
+    width: calc(100% - 4rem);
   }
   .list-food-container h2 {
     font-size: 1.6rem;
@@ -321,8 +330,8 @@ select:focus {
 
 /* --- BEGIN: List Food Form Section Styling --- */
 .form-section {
-  margin-bottom: 1.3rem;
-  padding: 1.1rem 1rem 0.7rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
   background: #f8fafc;
   border-radius: 0.8rem;
   border: 1px solid #e5e7eb;
@@ -340,4 +349,23 @@ select:focus {
   vertical-align: middle !important;
   min-width: 28px !important;
   min-height: 28px !important;
+}
+
+/* Push form below navbar */
+.below-navbar {
+  margin-top: 110px;
+}
+
+@media (max-width: 700px) {
+  .below-navbar {
+    margin-top: 80px;
+  }
+}
+
+/* Success message in green shade */
+#listFoodMessage.success {
+  background: #d1f7d6;
+  color: #256029;
+  border: 1px solid #A7D7A7;
+  display: block;
 } 
