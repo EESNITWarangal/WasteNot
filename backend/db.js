@@ -1,15 +1,17 @@
 const mysql = require('mysql2');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Prodeep#sql2255',
-  database: process.env.DB_NAME || 'wastenot',
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+const pool = process.env.MYSQL_URL
+  ? mysql.createPool(process.env.MYSQL_URL)
+  : mysql.createPool({
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || 'Prodeep#sql2255',
+      database: process.env.DB_NAME || 'wastenot',
+      port: process.env.DB_PORT || 3306,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    });
 
 // Test the connection
 pool.getConnection((err, connection) => {
